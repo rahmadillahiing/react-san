@@ -1,19 +1,11 @@
 import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../utils/Colors';
-import getData from '../utils/GetDataLocal';
 
 const SplashScreen = ({navigation}) => {
     useEffect(() => {
         setTimeout(()=>{
-            const userlogin = getData('user').then(res => {
-                res
-            });
-            if(userlogin) {
-                navigation.replace('MainApp');
-            } else {
-                navigation.replace('Welcome');
-            }        
+                navigation.navigate('Welcome');
         },3000);
     }, [navigation]);
 

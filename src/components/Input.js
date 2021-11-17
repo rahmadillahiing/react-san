@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { colors } from '../utils/Colors'
 
-const Input = ({label, value, onChangeText, secureTextEntry, disable}) => {
+const Input = ({label, value, onChangeText, secureTextEntry, disable, keyboardType}) => {
     const [border, setBorder] = useState(colors.border);
     const onFocusForm = () => {
         setBorder(colors.tertiary);
@@ -22,7 +22,8 @@ const Input = ({label, value, onChangeText, secureTextEntry, disable}) => {
                 onChangeText={onChangeText}
                 secureTextEntry={secureTextEntry}
                 editable={!disable}
-                selectTextOnFocus={!disable}                 
+                selectTextOnFocus={!disable}
+                keyboardType={keyboardType}                 
             />
         </View>
     )

@@ -1,23 +1,33 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Alert, Image, StyleSheet, Text, View } from 'react-native'
 import { colors } from '../utils/Colors'
 import getData from '../utils/GetDataLocal'
 import Button from './Button'
 
-const HomeProfile = (navigation) => {
-    const [profile, setProfile] = useState({
-        fullname:'',
-        token:'',
-    });
-    useEffect(() => {
-        getData('user').then(res => {
-            const data = res
-            console.log('data :',data)
-            setProfile(data);
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { CredentialsContext } from './CredentialContext';
+
+const HomeProfile = () => {
+    // const {storedCredential, setStoredCredentials} = useContext(CredentialsContext);
+    // const { fullname, token } = storedCredential ;
+    
+    const clearLogin = () => {
+        AsyncStorage
+        .removeItem('user')
+        .then(() => {
+            setStoredCredentials("");
         })
-    },[]);
+        .catch(error => console.log(error))
+    }
+    // useEffect(() => {
+    //     getData('user').then(res => {
+    //         const data = res
+    //         console.log('data :',data)
+    //         setProfile(data);
+    //     })
+    // },[]);
 
     // const signOut = async() => {
     //     getData('user').then(res=>{
@@ -45,11 +55,13 @@ const HomeProfile = (navigation) => {
         <View style={styles.container}>
             <Image style={styles.avatar} source={require('../../assets/icons/corn.png')} />
             <View style={styles.nameview}>
-                <Text style={styles.name}>rahmadillah</Text>
+                <Text style={styles.name} >Rahmadillah</Text>
+                {/* <Text style={styles.name} >{ token || token}</Text> */}
+
                 {/* <Button type= 'icon-only' icon='poweroff' onPress={()=> alert("tes klik")} /> */}
                 <Button 
                     title="Sign Out" 
-                    onPress={() => {Alert.alert("signout clicked")}} 
+                    onPress={clearLogin} 
                 />
             </View>
         </View>

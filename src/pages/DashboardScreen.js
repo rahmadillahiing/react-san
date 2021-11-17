@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import DataItem from '../components/DataItem';
 import Gap from '../components/Gap';
@@ -6,7 +6,10 @@ import Grafik from '../components/Grafik';
 import HomeProfile from '../components/HomeProfile';
 import { colors } from '../utils/Colors';
 
+
+
 const DashboardScreen = () => {
+    
     return (
         <ScrollView style={styles.page}>
             <HomeProfile />

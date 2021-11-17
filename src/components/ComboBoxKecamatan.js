@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { colors } from '../utils/Colors'
 
-const ComboBox = (props) => {
+const ComboBoxKecamatan = (props) => {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -13,30 +13,34 @@ const ComboBox = (props) => {
         setItems(()=> props.data);
     }, [props.data]);
 
-    // console.log("combobox",items);    
-    console.log("data lemparan :",props.data);    
+    // console.log("comboboxkabupaten",items);    
+    // console.log("data lemparan :",props.data);    
     return (
         <View>
             <Text style={styles.label}>{props.label}</Text>
                 <DropDownPicker listMode="MODAL" style={styles.input}
-                    placeholder="Select an Province"
                     open={open}
                     value={value}
+                    placeholder="Select an Kecamatan"
+                    defaultValue={value}
                     items={items}
                     setOpen={setOpen}
                     setValue={setValue}
                     setItems={setItems}
                     zIndex={props.zIndex}
                     onChangeValue={(value) => {
-                        props.onChangeValue(value)
-                        // console.log("selected Value", value)
+                        // props.onChangeValue(value)
+                        console.log("selected Value", value)
+                        if(value !==null ) {
+                            props.onChangeValue(value)
+                        }
                     }}
                />
         </View>
     )
 }
 
-export default ComboBox
+export default ComboBoxKecamatan
 
 const styles = StyleSheet.create({
     input: {

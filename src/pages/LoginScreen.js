@@ -1,6 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
+
+//async storage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+//context
+import { CredentialsContext } from '../components/CredentialContext';
 
 //connection API
 import axios from 'axios';
@@ -21,6 +27,7 @@ const LoginScreen = ({navigation}) => {
         password:'',
     });
     
+    const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
     const login = () => {
         setLoading(true);
         console.log("form :", form)
@@ -45,11 +52,8 @@ const LoginScreen = ({navigation}) => {
                         fullname: result.fullname,
                         token: result.token,
                     };
-
-                    storeData('user', data);
-                    // getData('user').then (res => {
-                    //     console.log('data :', res)
-                    // });                    
+                    persistLogin({...data}, message, status);
+                    navigation.navigate('MainApp');
                 }
             })
             .catch(err => {
@@ -80,6 +84,26 @@ const LoginScreen = ({navigation}) => {
     //     setMessageType(type);
     // }
 
+    const persistLogin = (credentials, message, status) => {
+        AsyncStorage
+        .setItem('user', JSON.stringify(credentials))
+        .then(() => {
+            console.log("persist Login :",credentials);
+            setStoredCredentials(credentials)
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
+
+    const getUser = () => {
+        getData('user').then(res => {
+          const data = res;
+          console.log("fetch data :",data.fullname)  
+        });
+      };
+    
     return (
     <>
         <View style={styles.page}>

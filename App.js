@@ -1,14 +1,44 @@
-import React from 'react';
-import Routes from './src/router/Routes';
+import React, {useState} from 'react';
+import AppLoading from 'expo-app-loading';
 
-import { NavigationContainer } from '@react-navigation/native';
+import Routes from './src/router/Routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+//context
+import { CredentialsContext } from './src/components/CredentialContext';
 
 const App = () => { 
+  const [appReady, setAppReady] = useState(false)
+  const [storedCredentials,setStoredCredentials] = useState("");
+
+  const checkLoginCredentials = () => {
+    AsyncStorage
+    .getItem('user')
+    .then((result) => {
+      if (result !== null) {
+        setStoredCredentials(JSON.stringify(result));
+      }else {
+        setStoredCredentials(null);
+      }
+    })
+    .catch(error => console.log(error))
+  }
+
+  if (!appReady) {
+    return(
+      <AppLoading
+        startAsync={checkLoginCredentials}
+        onFinish={()=> setAppReady(true)}
+        onError={console.warn}
+      />  
+    );
+  }
+
   return (
-    <NavigationContainer>
-        <Routes />
-    </NavigationContainer>
-  )
+    // <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
+      <Routes />
+    // </CredentialsContext.Provider>
+  );
 }
 
 export default App;
