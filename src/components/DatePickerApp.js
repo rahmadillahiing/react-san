@@ -7,7 +7,7 @@ import { colors } from '../utils/Colors'
 import { Octicons, Ionicons } from '@expo/vector-icons';
 
 
-const DatePickerApp = ({title}) => {
+const DatePickerApp = (props) => {
   const [date,setDate] = useState(new Date())
   const [mode,setMode] = useState('date')
   const [show,setShow] = useState(false)
@@ -28,8 +28,8 @@ const DatePickerApp = ({title}) => {
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
 
-        console.log(event);
-        console.log(selectedDate);
+        // console.log("Event :",event);
+        console.log("select date :",selectedDate);
         let tempDate = new Date(currentDate);
         let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
         setText(fDate);

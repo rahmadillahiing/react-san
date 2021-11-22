@@ -51,6 +51,7 @@ const LoginScreen = ({navigation}) => {
                     const data = {
                         fullname: result.fullname,
                         token: result.token,
+                        id: result.id,
                     };
                     persistLogin({...data}, message, status);
                     navigation.navigate('MainApp');

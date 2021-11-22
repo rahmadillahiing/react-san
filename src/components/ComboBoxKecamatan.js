@@ -7,7 +7,7 @@ const ComboBoxKecamatan = (props) => {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState(props.data);
+    const [items, setItems] = useState([]);
     
     useEffect(() => {
         setItems(()=> props.data);
@@ -19,22 +19,23 @@ const ComboBoxKecamatan = (props) => {
         <View>
             <Text style={styles.label}>{props.label}</Text>
                 <DropDownPicker listMode="MODAL" style={styles.input}
+                    placeholder= "Select an Kecamatan"
                     open={open}
                     value={value}
-                    placeholder="Select an Kecamatan"
+                    // placeholder={{label:"Select an Kecamatan", value:'0'}}
                     defaultValue={value}
                     items={items}
                     setOpen={setOpen}
                     setValue={setValue}
                     setItems={setItems}
                     zIndex={props.zIndex}
-                    onChangeValue={(value) => {
-                        // props.onChangeValue(value)
-                        console.log("selected Value", value)
-                        if(value !==null ) {
-                            props.onChangeValue(value)
-                        }
-                    }}
+                    // onChangeValue={(value) => {
+                    //     // props.onChangeValue(value)
+                    //     console.log("selected Value", value)
+                    //     if(value !==null ) {
+                    //         props.onChangeValue(value)
+                    //     }
+                    // }}
                />
         </View>
     )

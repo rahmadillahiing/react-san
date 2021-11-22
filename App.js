@@ -35,9 +35,9 @@ const App = () => {
   }
 
   return (
-    // <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
+    <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
       <Routes />
-    // </CredentialsContext.Provider>
+    </CredentialsContext.Provider>
   );
 }
 

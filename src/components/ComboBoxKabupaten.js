@@ -7,7 +7,7 @@ const ComboBoxKabupaten = (props) => {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState(props.data);
+    const [items, setItems] = useState([]);
     
     useEffect(() => {
         setItems(()=> props.data);
@@ -22,7 +22,6 @@ const ComboBoxKabupaten = (props) => {
                     open={open}
                     value={value}
                     placeholder="Select an Kabupaten"
-                    defaultValue={value}
                     items={items}
                     setOpen={setOpen}
                     setValue={setValue}
@@ -30,9 +29,11 @@ const ComboBoxKabupaten = (props) => {
                     zIndex={props.zIndex}
                     onChangeValue={(value) => {
                         // props.onChangeValue(value)
-                        console.log("selected Value", value)
+                        // console.log("selected Kabupaten Value", value)
                         if(value !==null ) {
                             props.onChangeValue(value)
+                        }else {
+                            setValue([0])
                         }
                     }}
                />

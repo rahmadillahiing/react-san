@@ -7,14 +7,24 @@ const ComboBox = (props) => {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState(props.data);
+    const [items, setItems] = useState([]);
     
-    useEffect(() => {
-        setItems(()=> props.data);
-    }, [props.data]);
+    // useEffect(() => {
+    //     setItems(()=> props.data);
+    // }, [props.data]);
 
     // console.log("combobox",items);    
-    console.log("data lemparan :",props.data);    
+    // console.log("data lemparan :",props.data);    
+
+    //rerender
+    const reRender = () => {
+        console.log("rerender jalan");
+        setValue(null)
+        setOpen(false)
+        setItems([])
+        setItems(() => props.data)
+    }
+
     return (
         <View>
             <Text style={styles.label}>{props.label}</Text>
@@ -27,9 +37,14 @@ const ComboBox = (props) => {
                     setValue={setValue}
                     setItems={setItems}
                     zIndex={props.zIndex}
+                    onPress = {reRender}
                     onChangeValue={(value) => {
-                        props.onChangeValue(value)
-                        // console.log("selected Value", value)
+                        console.log("selected Province:", value)
+                        if(value !==null ) {
+                            props.onChangeValue(value)
+                        }else {
+                            setValue([])
+                        }
                     }}
                />
         </View>
