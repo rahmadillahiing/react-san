@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import AppLoading from 'expo-app-loading';
 
 import Routes from './src/router/Routes';
+
+//async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //context
@@ -15,6 +17,7 @@ const App = () => {
     AsyncStorage
     .getItem('user')
     .then((result) => {
+      console.log("credential: ",JSON.stringify(result));
       if (result !== null) {
         setStoredCredentials(JSON.stringify(result));
       }else {

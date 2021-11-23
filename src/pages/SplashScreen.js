@@ -1,13 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../utils/Colors';
+import GetDataLocal from '../utils/GetDataLocal';
+
+import { CredentialsContext } from '../components/CredentialContext';
 
 const SplashScreen = ({navigation}) => {
+    const [userToken, setUserToken] = useState('')
+
     useEffect(() => {
-        setTimeout(()=>{
-                navigation.navigate('Welcome');
-        },3000);
+        const validate = getUser()
+        // console.log("validate", validate)
+        // console.log("data storage: ",userData);
+        // console.log("data token: ",userData.token);
+        // setTimeout(()=>{
+        //     if(userToken) {
+        //         navigation.replace('MainApp')
+        //     }else {
+        //         navigation.navigate('Welcome');
+        //     }
+        // },3000);
     }, [navigation]);
+
+    const getUser = () => {
+        GetDataLocal('user').then(res => {
+            console.log("getuser :", res);
+            if(res === null) {
+                setTimeout(()=>{
+                navigation.navigate('Welcome');
+                },3000)
+            }else {
+                setUserToken(res.token);
+                // console.log("gettoken :", res.token);
+                setTimeout(()=>{
+                    if(res.token !== '') {
+                        navigation.replace('MainApp')
+                    }else {
+                        navigation.navigate('Welcome');
+                    }
+                },3000);            
+            }
+            // console.log("user token :", userToken);
+            // console.log("user token :", userData.userToken);
+        });
+      };
 
     return (
         <View style={styles.page}>

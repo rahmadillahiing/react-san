@@ -9,15 +9,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from './CredentialContext';
 
-const HomeProfile = () => {
-    // const {storedCredential, setStoredCredentials} = useContext(CredentialsContext);
+const HomeProfile = ({navigation}) => {
+    const {storedCredential, setStoredCredentials} = useContext(CredentialsContext);
     // const { fullname, token } = storedCredential ;
     
     const clearLogin = () => {
         AsyncStorage
         .removeItem('user')
         .then(() => {
-            setStoredCredentials("");
+            // setStoredCredentials("");
+            navigation.replace('Login')
         })
         .catch(error => console.log(error))
     }
@@ -61,7 +62,7 @@ const HomeProfile = () => {
                 {/* <Button type= 'icon-only' icon='poweroff' onPress={()=> alert("tes klik")} /> */}
                 <Button 
                     title="Sign Out" 
-                    onPress={clearLogin} 
+                    onPress={clearLogin}
                 />
             </View>
         </View>
