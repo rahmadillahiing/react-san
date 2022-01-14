@@ -18,7 +18,7 @@ const ComboBox = (props) => {
 
     //rerender
     const reRender = () => {
-        console.log("rerender jalan");
+        // console.log("rerender jalan");
         setValue(null)
         setOpen(false)
         setItems([])

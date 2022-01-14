@@ -24,7 +24,7 @@ const SplashScreen = ({navigation}) => {
 
     const getUser = () => {
         GetDataLocal('user').then(res => {
-            console.log("getuser :", res);
+            // console.log("getuser :", res);
             if(res === null) {
                 setTimeout(()=>{
                 navigation.navigate('Welcome');
@@ -43,7 +43,7 @@ const SplashScreen = ({navigation}) => {
             // console.log("user token :", userToken);
             // console.log("user token :", userData.userToken);
         });
-      };
+    };
 
     return (
         <View style={styles.page}>

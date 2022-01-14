@@ -15,7 +15,7 @@
         "wasm",
         "svg"
       ]
-    },    
+    },
     "name": "sanproject",
     "slug": "sanproject",
     "version": "1.0.0",
@@ -23,11 +23,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan"
     }
   }
 }
