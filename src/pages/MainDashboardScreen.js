@@ -37,7 +37,6 @@ const MainDashboardScreen = ({ navigation }) => {
     legend: ["Produksi"],
   });
 
-  const [selectedDataPeriode, setSelectedDataPeriode] = useState([]);
   const [selectedData2, setSelectedData2] = useState({
     labels: ["Jan", "Feb", "March", "April", "May", "June"],
     datasets: [
@@ -49,14 +48,28 @@ const MainDashboardScreen = ({ navigation }) => {
     ],
     legend: ["Luas Tanam"],
   });
+
+  const [selectedData3, setSelectedData3] = useState({
+    labels: ["Jan", "Feb", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [10, 30, 40, 40, 50, 45],
+        color: (opacity = 1) => "#ECEFF1", // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: ["Yield"],
+  });
+
   const [currentMonth, setCurrentMonth] = useState([]);
 
   const scrollX = new Animated.Value(0);
-  const numberOfCharts = [1, 2];
+  const numberOfCharts = [1, 2, 3];
 
   useEffect(() => {
     getdatagrafik1();
     getdatagrafik2();
+    getdatagrafik3();
     getdatacurrent();
     // console.log("data dipilih :", selectedData);
   }, []);
@@ -102,6 +115,18 @@ const MainDashboardScreen = ({ navigation }) => {
       },
     ],
     legend: ["Luas Tanam"],
+  };
+
+  const data3 = {
+    labels: ["Jan", "Feb", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [5, 20, 15, 40, 50, 60],
+        color: (opacity = 1) => "#ECEFF1", // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: ["Yield"],
   };
 
   const getdatagrafik1 = () => {
@@ -158,7 +183,7 @@ const MainDashboardScreen = ({ navigation }) => {
       data.labels = periodgrafik1;
       data.legend[0] = "Produksi";
       // data.legend = legendname[2];
-      // console.log(data);
+      console.log("data", data);
 
       setSelectedData(data);
       // datafinal.datasets[0] = datagrafik;
@@ -211,9 +236,60 @@ const MainDashboardScreen = ({ navigation }) => {
       data2.labels = periodgrafik2;
       data2.legend[0] = "Luas Tanam";
       // data.legend = legendname[2];
-      // console.log("data 2 :", data);
+      console.log("data 2 :", data2);
 
       setSelectedData2(data2);
+
+      // setSelectedData2(datagrafik2);
+    });
+  };
+
+  const getdatagrafik3 = () => {
+    const url = "http://182.23.53.73:1340/apiuser/v1/getdashboard5";
+
+    fetch(url).then(async (response) => {
+      const isJson = response.headers
+        .get("content-type")
+        ?.includes("application/json");
+      const foundgrafik3 = isJson && (await response.json());
+
+      if (!response.ok) {
+        // get error message from body or default to response status
+        // const error = (data && data.message) || response.status;
+        // return Promise.reject(error);
+        console.log("error getting data grafik");
+        return;
+      }
+
+      console.log("call API 3 :", foundgrafik3);
+
+      const count = foundgrafik3.length;
+      const datagrafik3 = [];
+      const periodgrafik3 = [];
+
+      for (var i = 0; i < count; i++) {
+        datagrafik3.push(foundgrafik3[i].yield);
+        periodgrafik3.push(monthname(foundgrafik3[i].bulan));
+      }
+
+      const legendname = Object.keys(foundgrafik3[0]);
+
+      // const count = foundgrafik2.length;
+      // const datagrafik2 = [];
+
+      // for (var i = 0; i < count; i++) {
+      //   datagrafik2.push({
+      //     periode: monthname(foundgrafik2[i].bulan),
+      //     luastanam: foundgrafik2[i].luas_tanam,
+      //   });
+      // }
+      data3.datasets[0].data = datagrafik3;
+      data3.labels = periodgrafik3;
+      data3.legend[0] = "Yield";
+      // data.legend = legendname[2];
+      console.log("data 3 :", data3);
+
+      setSelectedData3(data3);
 
       // setSelectedData2(datagrafik2);
     });
@@ -340,7 +416,13 @@ const MainDashboardScreen = ({ navigation }) => {
               >
                 <LineChart
                   // tes={console.log(`${index}`)}
-                  data={`${index}` == 0 ? selectedData : selectedData2}
+                  data={
+                    `${index}` == 0
+                      ? selectedData
+                      : `${index}` == 1
+                      ? selectedData2
+                      : selectedData3
+                  }
                   width={screenWidth - 40}
                   height={180}
                   chartConfig={{
