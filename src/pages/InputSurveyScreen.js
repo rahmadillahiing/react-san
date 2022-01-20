@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import DropDownPicker from "react-native-dropdown-picker";
 import Button from "../components/Button";
 import Gap from "../components/Gap";
@@ -290,7 +291,13 @@ const InputSurveyScreen = ({ navigation }) => {
 
   return (
     <View style={styles.page}>
-      <Header onPress={() => navigation.goBack()} title="Input data survey" />
+      <StatusBar style="dark" />
+      {/* <Header onPress={() => navigation.goBack()} title="Input data survey" /> */}
+      <View style={{ marginVertical: 15, alignItems: "center", marginTop: 30 }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          SURVEY PREDIKSI PANEN
+        </Text>
+      </View>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {show && (
           <DateTimePicker

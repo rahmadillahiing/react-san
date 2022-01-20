@@ -27,7 +27,7 @@ const ProfileScreen = ({ navigation }) => {
     AsyncStorage.removeItem("user")
       .then(() => {
         setStoredCredentials("");
-        navigation.navigate("Login");
+        navigation.replace("Login");
       })
       .catch((error) => console.log(error));
   };
@@ -42,7 +42,7 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <View style={styles.container}>
         <Image
           style={styles.picture}

@@ -10,7 +10,8 @@ import {
 import { SIZES, FONTS, COLORS, icons } from "../constants";
 
 const ListCard = ({ dataList }) => {
-  const { period, tahun, bulan, estimasi_luas_tanam, produksi } = dataList;
+  const { tahun, bulan, estimasi_luas_tanam, produksi, nama_kec, nama_kab } =
+    dataList;
 
   const monthname = (bulan) => {
     return [
@@ -38,20 +39,24 @@ const ListCard = ({ dataList }) => {
       }}
       onPress={() => console.log(dataList)}
     >
-      <View style={{ flex: 1, marginLeft: SIZES.radius }}>
+      <View style={{ flex: 1, marginLeft: SIZES.font }}>
         <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>
-          Tahun : {tahun}
+          Periode : {monthname(bulan)} {tahun}
         </Text>
         <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>
-          Bulan : {monthname(bulan)}
+          Kabupaten : {nama_kab}
+        </Text>
+        <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>
+          Kecamatan : {nama_kec}
         </Text>
         <Text style={{ ...FONTS.h3 }}>
           Est Luas Tanam : {estimasi_luas_tanam} Hektar
         </Text>
-        <Text style={{ ...FONTS.h3 }}>Produksi : {produksi} Ton</Text>
+        <Text style={{ ...FONTS.h3 }}>Est Produksi : {produksi} Ton</Text>
+        <Text style={{ ...FONTS.h3 }}>Avg Yield : {dataList.yield} </Text>
       </View>
 
-      <View
+      {/* <View
         style={{ flexDirection: "row", height: "100%", alignItems: "center" }}
       >
         <Image
@@ -62,7 +67,7 @@ const ListCard = ({ dataList }) => {
             tintColor: COLORS.gray,
           }}
         />
-      </View>
+      </View> */}
     </TouchableOpacity>
 
     // <View style={styles.coinContainer}>

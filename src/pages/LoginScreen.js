@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
-
+import { StatusBar } from "expo-status-bar";
 //async storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -106,6 +106,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <>
       <View style={styles.page}>
+        <StatusBar style="dark" />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Gap height={40} />
           <Image

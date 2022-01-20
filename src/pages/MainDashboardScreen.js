@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   SafeAreaView,
@@ -33,8 +35,13 @@ const MainDashboardScreen = ({ navigation }) => {
         color: (opacity = 1) => "#ECEFF1", // optional
         strokeWidth: 2, // optional
       },
+      {
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+      },
     ],
-    legend: ["Produksi"],
+    legend: ["Produksi", "Legend"],
   });
 
   const [selectedData2, setSelectedData2] = useState({
@@ -45,8 +52,13 @@ const MainDashboardScreen = ({ navigation }) => {
         color: (opacity = 1) => "#ECEFF1", // optional
         strokeWidth: 2, // optional
       },
+      {
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+      },
     ],
-    legend: ["Luas Tanam"],
+    legend: ["Luas Tanam", "Legend"],
   });
 
   const [selectedData3, setSelectedData3] = useState({
@@ -57,8 +69,13 @@ const MainDashboardScreen = ({ navigation }) => {
         color: (opacity = 1) => "#ECEFF1", // optional
         strokeWidth: 2, // optional
       },
+      {
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+      },
     ],
-    legend: ["Yield"],
+    legend: ["Yield", "Legend"],
   });
 
   const [currentMonth, setCurrentMonth] = useState([]);
@@ -66,13 +83,22 @@ const MainDashboardScreen = ({ navigation }) => {
   const scrollX = new Animated.Value(0);
   const numberOfCharts = [1, 2, 3];
 
-  useEffect(() => {
-    getdatagrafik1();
-    getdatagrafik2();
-    getdatagrafik3();
-    getdatacurrent();
-    // console.log("data dipilih :", selectedData);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getdatagrafik1();
+      getdatagrafik2();
+      getdatagrafik3();
+      getdatacurrent();
+    }, [])
+  );
+
+  // useEffect(() => {
+  //   getdatagrafik1();
+  //   getdatagrafik2();
+  //   getdatagrafik3();
+  //   getdatacurrent();
+  //   // console.log("data dipilih :", selectedData);
+  // }, []);
 
   const monthname = (bulan) => {
     return [
@@ -97,12 +123,17 @@ const MainDashboardScreen = ({ navigation }) => {
     labels: ["Jan", "Feb", "March", "April", "May", "June"],
     datasets: [
       {
-        data: [10, 20, 15, 40, 50, 45],
-        color: (opacity = 1) => "#ECEFF1", // optional
-        strokeWidth: 2, // optional
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => "#ECEFF1",
+      },
+      {
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
       },
     ],
-    legend: ["Produksi"],
+    legend: ["Produksi", "Hist"],
   };
 
   const data2 = {
@@ -113,8 +144,13 @@ const MainDashboardScreen = ({ navigation }) => {
         color: (opacity = 1) => "#ECEFF1", // optional
         strokeWidth: 2, // optional
       },
+      {
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+      },
     ],
-    legend: ["Luas Tanam"],
+    legend: ["Luas Tanam", "Legend"],
   };
 
   const data3 = {
@@ -125,8 +161,13 @@ const MainDashboardScreen = ({ navigation }) => {
         color: (opacity = 1) => "#ECEFF1", // optional
         strokeWidth: 2, // optional
       },
+      {
+        data: [0, 0, 0, 0, 0, 0],
+        strokeWidth: 2,
+        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+      },
     ],
-    legend: ["Yield"],
+    legend: ["Yield", "Legend"],
   };
 
   const getdatagrafik1 = () => {
@@ -160,26 +201,12 @@ const MainDashboardScreen = ({ navigation }) => {
 
       const legendname = Object.keys(foundgrafik[0]);
 
-      // for (var i = 0; i < datagrafik.length; i++) {
-      //   periodgrafik1.push(foundgrafik[i].periode);
-      // }
-      // const datafinal = {
-      //   labels: periodgrafik1,
-      //   datasets: [
-      //     {
-      //       data: datagrafik,
-      //       // color: (opacity = 1) => "#ECEFF1", // optional
-      //       // strokeWidth: 2, // optional
-      //     },
-      //   ],
-      //   // legend: "produksi",
-      // };
-
       console.log("data grafik", datagrafik);
       // const datafinal = { ...data.datasets[0].data };
-      console.log(legendname[2].toString());
+      // console.log(legendname[2].toString());
 
       data.datasets[0].data = datagrafik;
+      console.log("dataset 2 : ", data.datasets[1].data);
       data.labels = periodgrafik1;
       data.legend[0] = "Produksi";
       // data.legend = legendname[2];
@@ -283,6 +310,7 @@ const MainDashboardScreen = ({ navigation }) => {
       //     luastanam: foundgrafik2[i].luas_tanam,
       //   });
       // }
+      console.log("data API 3 :", foundgrafik3);
       data3.datasets[0].data = datagrafik3;
       data3.labels = periodgrafik3;
       data3.legend[0] = "Yield";
@@ -311,7 +339,7 @@ const MainDashboardScreen = ({ navigation }) => {
         console.log("error getting data grafik");
         return;
       }
-
+      console.log("data bawah : ", foundcurrent);
       const count = foundcurrent.length;
       const foundcurrentdata = [];
 
@@ -320,6 +348,7 @@ const MainDashboardScreen = ({ navigation }) => {
           namaprov: foundcurrent[i].nama_prov,
           produksi: foundcurrent[i].produksi,
           luastanam: foundcurrent[i].luas_tanam,
+          yield: foundcurrent[i].yield,
         });
       }
       setCurrentMonth(foundcurrentdata);
@@ -447,9 +476,9 @@ const MainDashboardScreen = ({ navigation }) => {
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
       style={{
-        width: 180,
-        paddingVertical: SIZES.padding,
-        paddingHorizontal: SIZES.padding,
+        width: 200,
+        paddingVertical: SIZES.font,
+        paddingHorizontal: SIZES.font,
         marginLeft: index == 0 ? SIZES.padding : 0,
         marginRight: SIZES.radius,
         borderRadius: 10,
@@ -462,10 +491,13 @@ const MainDashboardScreen = ({ navigation }) => {
         <View style={{ marginLeft: SIZES.base }}>
           <Text style={{ ...FONTS.h2 }}>{item.namaprov}</Text>
           <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>
-            Luas Tanam : {item.luastanam} Hektar
+            Est Luas Tanam : {"\n"} {item.luastanam} Hektar
           </Text>
           <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>
-            Produksi : {item.produksi} Ton
+            Est Produksi : {"\n"} {item.produksi} Ton
+          </Text>
+          <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>
+            Avg Yield : {"\n"} {item.yield}
           </Text>
         </View>
       </View>
@@ -480,8 +512,11 @@ const MainDashboardScreen = ({ navigation }) => {
         paddingVertical: 40,
       }}
     >
-      <View style={{ alignItems: "center" }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>DASHBOARD</Text>
+      <StatusBar style="dark" />
+      <View style={{ alignItems: "center", marginTop: 30 }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          DASHBOARD PREDIKSI PANEN
+        </Text>
       </View>
       <ScrollView>
         <View
@@ -493,7 +528,7 @@ const MainDashboardScreen = ({ navigation }) => {
         >
           {renderChart()}
         </View>
-        <View style>
+        <View>
           <Text
             style={{
               marginLeft: SIZES.padding,
@@ -501,10 +536,10 @@ const MainDashboardScreen = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            Data Bulan Berjalan
+            Year To Date Prediksi Panen
           </Text>
           <FlatList
-            contentContainerStyle={{ marginTop: SIZES.base }}
+            contentContainerStyle={{ marginTop: SIZES.radius }}
             data={currentMonth}
             renderItem={renderItem}
             keyExtractor={(item) => `${item.namaprov}`}

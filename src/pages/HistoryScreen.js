@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import HeaderBar from "../components/HeaderBar";
-
+import { StatusBar } from "expo-status-bar";
 import { COLORS, SIZES, FONTS } from "../constants";
 
 import SurveyHistory from "../components/SurveyHistory";
@@ -28,7 +28,8 @@ const HistoryScreen = ({ navigation, route }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 20 }}>
+      <StatusBar style="dark" />
       <View style={{ marginTop: 40, marginLeft: 40 }}>
         <HeaderBar />
       </View>
@@ -37,14 +38,13 @@ const HistoryScreen = ({ navigation, route }) => {
         style={{
           flex: 1,
           paddingBottom: 130,
-          marginTop: 40,
+          marginTop: 20,
           marginLeft: 5,
         }}
       >
         {renderItem()}
       </View>
     </View>
-    // <ScrollView>
   );
 };
 

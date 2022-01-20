@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
   ScrollView,
   StyleSheet,
@@ -26,11 +27,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //context
 import { CredentialsContext } from "../components/CredentialContext";
-import CardList from "../components/CardList";
-import Header from "../components/Header";
-import CustomSwitch from "../components/CustomSwitch";
-import ListItem from "../components/ListItem";
-import ListCard from "../components/ListCard";
 
 const DashboardScreen = ({ navigation }) => {
   const [dataProvinsi, setDataProvinsi] = useState([]);
@@ -87,7 +83,7 @@ const DashboardScreen = ({ navigation }) => {
         bulan2: tglarrayTo[1],
       }),
     };
-
+    console.log(requestOptions);
     const url = "http://182.23.53.73:1340/apiuser/v1/reportsurvey";
     fetch(url, requestOptions).then(async (response) => {
       const isJson = response.headers
@@ -288,6 +284,7 @@ const DashboardScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <StatusBar style="dark" />
       <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 20 }}>
         <View
           style={{ marginVertical: 15, alignItems: "center", marginTop: 30 }}
@@ -313,10 +310,10 @@ const DashboardScreen = ({ navigation }) => {
               placeholder="Pilih Provinsi"
               defaultValue={dataProvinsi}
               zIndex={10}
-              onChangeValue={(value) => {
+              onChangeValue={(value, label) => {
                 setValueKabupaten(null);
                 setValueKecamatan(null);
-                console.log("province: ", value);
+                console.log("data :::", label);
                 if (value !== null) {
                   getKabupaten(valueProvince);
                   getKecamatan(valueKabupaten);
