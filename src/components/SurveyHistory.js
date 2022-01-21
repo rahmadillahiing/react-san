@@ -19,6 +19,7 @@ const SurveyHistory = ({ customContainerStyle, history }) => {
   const [produksitanam, setProduksitanam] = useState(0);
   const [yieldtanam, setYieldtanam] = useState(0);
   const [namaprov, setNamaprov] = useState("");
+
   useEffect(() => {
     hitungtotal(history);
   });

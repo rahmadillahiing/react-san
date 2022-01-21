@@ -13,8 +13,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomNavigation from "../navigation/BottomNavigation";
 
 //context
-import { CredentialsContext } from "../components/CredentialContext";
 import HistoryScreen from "../pages/HistoryScreen";
+import FinalInputSurveyScreen from "../pages/FinalInputSurveyScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,6 +39,11 @@ const MainApp = () => {
       <Tab.Screen
         name="InputSurvey"
         component={InputSurveyScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Final Data"
+        component={FinalInputSurveyScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen

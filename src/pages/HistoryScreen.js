@@ -18,7 +18,7 @@ const HistoryScreen = ({ navigation, route }) => {
   const [selectData, setSelectData] = useState(route.params);
 
   function renderItem() {
-    console.log("selectdata :", selectData);
+    // console.log("selectdata :", selectData);
     return (
       <SurveyHistory
         customContainerStyle={{ ...styles.shadow }}

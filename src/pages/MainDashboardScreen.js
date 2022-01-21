@@ -32,13 +32,14 @@ const MainDashboardScreen = ({ navigation }) => {
     datasets: [
       {
         data: [10, 20, 15, 40, 50, 45],
-        color: (opacity = 1) => "#ECEFF1", // optional
+        // color: (opacity = 1) => "#ECEFF1", // optional
         strokeWidth: 2, // optional
+        color: (opacity = 1) => `rgba(0,0,102, ${opacity})`, // optional
       },
       {
         data: [0, 0, 0, 0, 0, 0],
         strokeWidth: 2,
-        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(255,0,0, ${opacity})`, // optional
       },
     ],
     legend: ["Produksi", "Legend"],
@@ -55,7 +56,7 @@ const MainDashboardScreen = ({ navigation }) => {
       {
         data: [0, 0, 0, 0, 0, 0],
         strokeWidth: 2,
-        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+        color: (opacity = 2) => `rgba(255,0,0, ${opacity})`, // optional
       },
     ],
     legend: ["Luas Tanam", "Legend"],
@@ -72,7 +73,7 @@ const MainDashboardScreen = ({ navigation }) => {
       {
         data: [0, 0, 0, 0, 0, 0],
         strokeWidth: 2,
-        color: (opacity = 1) => `rgba(255,251,71, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(255,0,0, ${opacity})`, // optional
       },
     ],
     legend: ["Yield", "Legend"],
@@ -86,8 +87,11 @@ const MainDashboardScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       getdatagrafik1();
+      getdatagrafik6();
       getdatagrafik2();
+      getdatagrafik7();
       getdatagrafik3();
+      getdatagrafik8();
       getdatacurrent();
     }, [])
   );
@@ -104,12 +108,12 @@ const MainDashboardScreen = ({ navigation }) => {
     return [
       "Jan",
       "Feb",
-      "March",
-      "April",
+      "Mar",
+      "Apr",
       "May",
-      "June",
-      "July",
-      "August",
+      "Jun",
+      "Jul",
+      "Aug",
       "Sept",
       "Oct",
       "Nov",
@@ -196,10 +200,12 @@ const MainDashboardScreen = ({ navigation }) => {
 
       for (var i = 0; i < count; i++) {
         datagrafik.push(foundgrafik[i].produksi);
-        periodgrafik1.push(monthname(foundgrafik[i].bulan));
+        periodgrafik1.push(
+          monthname(foundgrafik[i].bulan) + "-" + foundgrafik[i].tahun
+        );
       }
 
-      const legendname = Object.keys(foundgrafik[0]);
+      // const legendname = Object.keys(foundgrafik[0]);
 
       console.log("data grafik", datagrafik);
       // const datafinal = { ...data.datasets[0].data };
@@ -208,7 +214,58 @@ const MainDashboardScreen = ({ navigation }) => {
       data.datasets[0].data = datagrafik;
       console.log("dataset 2 : ", data.datasets[1].data);
       data.labels = periodgrafik1;
-      data.legend[0] = "Produksi";
+      // data.legend[0] = "Produksi";
+      // data.legend = legendname[2];
+      console.log("data", data);
+
+      setSelectedData(data);
+      // datafinal.datasets[0] = datagrafik;
+      // datafinal.labels = periodgrafik1;
+
+      // console.log("data final :", datafinal);
+
+      // setSelectedDataPeriode(periodgrafik1);
+    });
+  };
+
+  const getdatagrafik6 = () => {
+    const url6 = "http://182.23.53.73:1340/apiuser/v1/getdashboard6";
+
+    fetch(url6).then(async (response) => {
+      const isJson = response.headers
+        .get("content-type")
+        ?.includes("application/json");
+      const foundgrafik6 = isJson && (await response.json());
+      // console.log("nama legend : ", foundgrafik[1].produksi[0]);
+
+      if (!response.ok) {
+        // get error message from body or default to response status
+        // const error = (data && data.message) || response.status;
+        // return Promise.reject(error);
+        console.log("error getting data grafik");
+        return;
+      }
+
+      // console.log("legend :", Object.keys(foundgrafik[2]));
+
+      const count = foundgrafik6.length;
+      const datagrafik6 = [];
+      const periodgrafik6 = [];
+
+      for (var i = 0; i < count; i++) {
+        datagrafik6.push(foundgrafik6[i].produksi);
+        periodgrafik6.push(
+          monthname(foundgrafik6[i].bulan) + "-" + foundgrafik6[i].tahun
+        );
+      }
+
+      console.log("data grafik", datagrafik6);
+      // const datafinal = { ...data.datasets[0].data };
+      // console.log(legendname[2].toString());
+
+      data.datasets[1].data = datagrafik6;
+      data.labels = periodgrafik6;
+      // data.legend[0] = "Produksi";
       // data.legend = legendname[2];
       console.log("data", data);
 
@@ -245,7 +302,9 @@ const MainDashboardScreen = ({ navigation }) => {
 
       for (var i = 0; i < count; i++) {
         datagrafik2.push(foundgrafik2[i].luas_tanam);
-        periodgrafik2.push(monthname(foundgrafik2[i].bulan));
+        periodgrafik2.push(
+          monthname(foundgrafik2[i].bulan) + "-" + foundgrafik2[i].tahun
+        );
       }
 
       const legendname = Object.keys(foundgrafik2[0]);
@@ -264,6 +323,57 @@ const MainDashboardScreen = ({ navigation }) => {
       data2.legend[0] = "Luas Tanam";
       // data.legend = legendname[2];
       console.log("data 2 :", data2);
+
+      setSelectedData2(data2);
+
+      // setSelectedData2(datagrafik2);
+    });
+  };
+
+  const getdatagrafik7 = () => {
+    const url = "http://182.23.53.73:1340/apiuser/v1/getdashboard7";
+
+    fetch(url).then(async (response) => {
+      const isJson = response.headers
+        .get("content-type")
+        ?.includes("application/json");
+      const foundgrafik7 = isJson && (await response.json());
+
+      if (!response.ok) {
+        // get error message from body or default to response status
+        // const error = (data && data.message) || response.status;
+        // return Promise.reject(error);
+        console.log("error getting data grafik");
+        return;
+      }
+
+      const count = foundgrafik7.length;
+      const datagrafik7 = [];
+      const periodgrafik7 = [];
+
+      for (var i = 0; i < count; i++) {
+        datagrafik7.push(foundgrafik7[i].luas_tanam);
+        periodgrafik7.push(
+          monthname(foundgrafik7[i].bulan) + "-" + foundgrafik7[i].tahun
+        );
+      }
+
+      // const legendname = Object.keys(foundgrafik2[0]);
+
+      // const count = foundgrafik2.length;
+      // const datagrafik2 = [];
+
+      // for (var i = 0; i < count; i++) {
+      //   datagrafik2.push({
+      //     periode: monthname(foundgrafik2[i].bulan),
+      //     luastanam: foundgrafik2[i].luas_tanam,
+      //   });
+      // }
+      data2.datasets[1].data = datagrafik7;
+      data2.labels = periodgrafik7;
+      data2.legend[0] = "Luas Tanam";
+      // data.legend = legendname[2];
+      // console.log("data 2 :", data2);
 
       setSelectedData2(data2);
 
@@ -296,7 +406,9 @@ const MainDashboardScreen = ({ navigation }) => {
 
       for (var i = 0; i < count; i++) {
         datagrafik3.push(foundgrafik3[i].yield);
-        periodgrafik3.push(monthname(foundgrafik3[i].bulan));
+        periodgrafik3.push(
+          monthname(foundgrafik3[i].bulan) + "-" + foundgrafik3[i].tahun
+        );
       }
 
       const legendname = Object.keys(foundgrafik3[0]);
@@ -310,12 +422,66 @@ const MainDashboardScreen = ({ navigation }) => {
       //     luastanam: foundgrafik2[i].luas_tanam,
       //   });
       // }
-      console.log("data API 3 :", foundgrafik3);
+      // console.log("data API 3 :", foundgrafik3);
       data3.datasets[0].data = datagrafik3;
       data3.labels = periodgrafik3;
-      data3.legend[0] = "Yield";
+      // data3.legend[0] = "Yield";
       // data.legend = legendname[2];
       console.log("data 3 :", data3);
+
+      setSelectedData3(data3);
+
+      // setSelectedData2(datagrafik2);
+    });
+  };
+
+  const getdatagrafik8 = () => {
+    const url = "http://182.23.53.73:1340/apiuser/v1/getdashboard8";
+
+    fetch(url).then(async (response) => {
+      const isJson = response.headers
+        .get("content-type")
+        ?.includes("application/json");
+      const foundgrafik8 = isJson && (await response.json());
+
+      if (!response.ok) {
+        // get error message from body or default to response status
+        // const error = (data && data.message) || response.status;
+        // return Promise.reject(error);
+        console.log("error getting data grafik");
+        return;
+      }
+
+      // console.log("call API 3 :", foundgrafik3);
+
+      const count = foundgrafik8.length;
+      const datagrafik8 = [];
+      const periodgrafik8 = [];
+
+      for (var i = 0; i < count; i++) {
+        datagrafik8.push(foundgrafik8[i].yield);
+        periodgrafik8.push(
+          monthname(foundgrafik8[i].bulan) + "-" + foundgrafik8[i].tahun
+        );
+      }
+
+      // const legendname = Object.keys(foundgrafik3[0]);
+
+      // const count = foundgrafik2.length;
+      // const datagrafik2 = [];
+
+      // for (var i = 0; i < count; i++) {
+      //   datagrafik2.push({
+      //     periode: monthname(foundgrafik2[i].bulan),
+      //     luastanam: foundgrafik2[i].luas_tanam,
+      //   });
+      // }
+      // console.log("data API 3 :", foundgrafik3);
+      data3.datasets[1].data = datagrafik8;
+      data3.labels = periodgrafik8;
+      // data3.legend[0] = "Yield";
+      // data.legend = legendname[2];
+      // console.log("data 3 :", data3);
 
       setSelectedData3(data3);
 
@@ -345,6 +511,7 @@ const MainDashboardScreen = ({ navigation }) => {
 
       for (var i = 0; i < count; i++) {
         foundcurrentdata.push({
+          namakab: foundcurrent[i].nama_kab,
           namaprov: foundcurrent[i].nama_prov,
           produksi: foundcurrent[i].produksi,
           luastanam: foundcurrent[i].luas_tanam,
@@ -454,15 +621,21 @@ const MainDashboardScreen = ({ navigation }) => {
                   }
                   width={screenWidth - 40}
                   height={180}
+                  yAxisSuffix={
+                    `${index}` == 0 ? " Ton" : `${index}` == 1 ? " H" : ""
+                  }
+                  fontSize={8}
+                  bezier
                   chartConfig={{
-                    backgroundColor: "#1cc910",
+                    propsForLabels: { fontSize: 9 },
+                    backgroundColor: "#8D0101",
                     backgroundGradientFrom: "#183086",
                     backgroundGradientTo: "#183086",
                     decimalPlaces: 1, // optional, defaults to 2dp
                     color: (opacity = 255) => "#ECEFF1",
                   }}
                   // yAxisLabel={"$ - "}
-                  style={{ marginLeft: 5, marginRight: 5, borderRadius: 7 }}
+                  style={{ marginLeft: 4, marginRight: 5, borderRadius: 7 }}
                 />
               </View>
             </View>
@@ -490,6 +663,7 @@ const MainDashboardScreen = ({ navigation }) => {
       <View style={{ flexDirection: "row" }}>
         <View style={{ marginLeft: SIZES.base }}>
           <Text style={{ ...FONTS.h2 }}>{item.namaprov}</Text>
+          <Text style={{ ...FONTS.h3 }}>Kabupaten: {item.namakab}</Text>
           <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>
             Est Luas Tanam : {"\n"} {item.luastanam} Hektar
           </Text>
@@ -522,7 +696,7 @@ const MainDashboardScreen = ({ navigation }) => {
         <View
           style={{
             flex: 1,
-            paddingBottom: SIZES.padding,
+            paddingBottom: SIZES.font,
             backgroundColor: COLORS.white,
           }}
         >
@@ -542,7 +716,7 @@ const MainDashboardScreen = ({ navigation }) => {
             contentContainerStyle={{ marginTop: SIZES.radius }}
             data={currentMonth}
             renderItem={renderItem}
-            keyExtractor={(item) => `${item.namaprov}`}
+            keyExtractor={(item) => `${item.namaprov} + ${item.namakab} `}
             horizontal
             showsHorizontalScrollIndicator={false}
           />

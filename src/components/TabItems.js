@@ -8,6 +8,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { colors } from "../utils/Colors";
 //<Feather name="bookmark" size={24} color="black" />
+import { Octicons } from "@expo/vector-icons";
 
 const TabItems = ({ title, active, onPress, onLongPress }) => {
   const Icon = () => {
@@ -45,6 +46,13 @@ const TabItems = ({ title, active, onPress, onLongPress }) => {
         <Feather name="user" size={24} color="white" />
       ) : (
         <Feather name="user" size={24} color="black" />
+      );
+    }
+    if (title === "Final Data") {
+      return active ? (
+        <Octicons name="checklist" size={24} color="white" />
+      ) : (
+        <Octicons name="checklist" size={24} color="black" />
       );
     }
     return active ? (

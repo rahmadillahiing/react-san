@@ -65,7 +65,28 @@ const DashboardScreen = ({ navigation }) => {
     setShowFrom("date");
   };
 
+  const checkTextInput = () => {
+    console.log("trim", valueProvince);
+    if (!textFrom.trim()) {
+      console.log(textFrom);
+      alert("Pilih tanggal periode Awal");
+      return;
+    }
+
+    if (!textTo.trim()) {
+      alert("Pilih tanggal periode Akhir");
+      return;
+    }
+    if (valueProvince === null) {
+      alert("Pilih Provinsi Terlebih Dahulu");
+      return;
+    }
+
+    cariData();
+  };
+
   const cariData = () => {
+    console.log("Provinsi Value :", valueProvince);
     setData(null);
     const tglarrayFrom = textFrom.split("/");
     const tglarrayTo = textTo.split("/");
@@ -83,7 +104,6 @@ const DashboardScreen = ({ navigation }) => {
         bulan2: tglarrayTo[1],
       }),
     };
-    console.log(requestOptions);
     const url = "http://182.23.53.73:1340/apiuser/v1/reportsurvey";
     fetch(url, requestOptions).then(async (response) => {
       const isJson = response.headers
@@ -162,7 +182,7 @@ const DashboardScreen = ({ navigation }) => {
   const getKabupaten = (value) => {
     const url = `http://182.23.53.73:1340/getkabupaten/${valueProvince}`;
 
-    console.log("masuk kabupaten, provinsi yang dipilih  :", value);
+    // console.log("masuk kabupaten, provinsi yang dipilih  :", value);
     // alert((value));
     fetch(url).then(async (response) => {
       const isJson = response.headers
@@ -313,7 +333,7 @@ const DashboardScreen = ({ navigation }) => {
               onChangeValue={(value, label) => {
                 setValueKabupaten(null);
                 setValueKecamatan(null);
-                console.log("data :::", label);
+                // console.log("data :::", label);
                 if (value !== null) {
                   getKabupaten(valueProvince);
                   getKecamatan(valueKabupaten);
@@ -339,7 +359,7 @@ const DashboardScreen = ({ navigation }) => {
               defaultValue={dataKabupaten}
               zIndex={9}
               onChangeValue={(valueKabupaten) => {
-                console.log("selected Kabupaten:", valueKabupaten);
+                // console.log("selected Kabupaten:", valueKabupaten);
                 if (valueKabupaten !== null) {
                   getKecamatan(valueKabupaten);
                 }
@@ -438,7 +458,7 @@ const DashboardScreen = ({ navigation }) => {
           <Gap height={10} />
         </View>
         <Gap height={10} />
-        <Button title="Proses" onPress={cariData} />
+        <Button title="Proses" onPress={checkTextInput} />
         <Gap height={10} />
       </ScrollView>
 

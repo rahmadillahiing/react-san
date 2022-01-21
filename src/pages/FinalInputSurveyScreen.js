@@ -37,7 +37,7 @@ import { CredentialsContext } from "../components/CredentialContext";
 // ]
 // const data =[{"label":"Gorontalo","value":2},{"label":"Jawa Tengah","value":9},{"label":"Jawa Timur","value":7},{"label":"Lampung","value":5},{"label":"Lampung","value":8},{"label":"Nusa Tenggara Barat","value":1},{"label":"Sulawesi Selatan","value":4},{"label":"Sulawesi Tengah","value":3},{"label":"Sumatera Utara","value":6}]
 
-const InputSurveyScreen = ({ navigation }) => {
+const FinalInputSurveyScreen = ({ navigation }) => {
   const [storedCredentials, setStoredCredentials] = useState();
 
   const [dataProvinsi, setDataProvinsi] = useState([]);
@@ -163,7 +163,7 @@ const InputSurveyScreen = ({ navigation }) => {
       }),
     };
     // console.log("data", requestOptions);
-    const url = "http://182.23.53.73:1340/apiuser/v1/createsurvey";
+    const url = "http://182.23.53.73:1340/apiuser/v1/finalsurvey";
     fetch(url, requestOptions).then(async (response) => {
       const isJson = response.headers
         .get("content-type")
@@ -295,7 +295,7 @@ const InputSurveyScreen = ({ navigation }) => {
       {/* <Header onPress={() => navigation.goBack()} title="Input data survey" /> */}
       <View style={{ marginVertical: 15, alignItems: "center", marginTop: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          SURVEY PREDIKSI PANEN
+          SURVEY FINAL PANEN
         </Text>
       </View>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -445,7 +445,7 @@ const InputSurveyScreen = ({ navigation }) => {
   );
 };
 
-export default InputSurveyScreen;
+export default FinalInputSurveyScreen;
 
 const styles = StyleSheet.create({
   page: {
