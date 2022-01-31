@@ -19,6 +19,7 @@ const SurveyHistory = ({ customContainerStyle, history }) => {
   const [produksitanam, setProduksitanam] = useState(0);
   const [yieldtanam, setYieldtanam] = useState(0);
   const [namaprov, setNamaprov] = useState("");
+  const [isactive, setIsactive] = useState(0);
 
   useEffect(() => {
     hitungtotal(history);
@@ -31,18 +32,20 @@ const SurveyHistory = ({ customContainerStyle, history }) => {
     let yieldd = 0;
     // console.log("history :", history[1].estimasi_luas_tanam);
     let namaprov = "";
-
+    let activeyn = 0;
     for (var i = 0; i < hitung; i++) {
       luas += parseInt(history[i].estimasi_luas_tanam);
       produksi += parseInt(history[i].produksi);
       yieldd += parseInt(history[i].yield);
       namaprov = history[0].nama_prov;
+      activeyn = history[0].is_active;
     }
     yieldd = yieldd / hitung;
     setLuastanam(luas);
     setProduksitanam(produksi);
     setYieldtanam(yieldd);
     setNamaprov(namaprov);
+    setIsactive(activeyn);
   };
 
   return (

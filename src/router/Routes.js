@@ -31,18 +31,18 @@ const MainApp = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Survey"
+        name="Laporan"
         component={DashboardScreen}
         options={{ headerShown: false }}
       />
 
       <Tab.Screen
-        name="InputSurvey"
+        name="Survey"
         component={InputSurveyScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Final Data"
+        name="Final Survey"
         component={FinalInputSurveyScreen}
         options={{ headerShown: false }}
       />

@@ -10,8 +10,15 @@ import {
 import { SIZES, FONTS, COLORS, icons } from "../constants";
 
 const ListCard = ({ dataList }) => {
-  const { tahun, bulan, estimasi_luas_tanam, produksi, nama_kec, nama_kab } =
-    dataList;
+  const {
+    tahun,
+    bulan,
+    estimasi_luas_tanam,
+    produksi,
+    nama_kec,
+    nama_kab,
+    is_final,
+  } = dataList;
 
   const monthname = (bulan) => {
     return [
@@ -56,18 +63,18 @@ const ListCard = ({ dataList }) => {
         <Text style={{ ...FONTS.h3 }}>Avg Yield : {dataList.yield} </Text>
       </View>
 
-      {/* <View
+      <View
         style={{ flexDirection: "row", height: "100%", alignItems: "center" }}
       >
         <Image
-          source={icons.right_arrow}
+          source={is_final == 1 ? icons.green_checklist : icons.right_arrow}
           style={{
             width: 20,
             height: 20,
             tintColor: COLORS.gray,
           }}
         />
-      </View> */}
+      </View>
     </TouchableOpacity>
 
     // <View style={styles.coinContainer}>

@@ -162,14 +162,14 @@ const FinalInputSurveyScreen = ({ navigation }) => {
         surveyor_id: storedCredentials.id,
       }),
     };
-    // console.log("data", requestOptions);
+    console.log("data", requestOptions);
     const url = "http://182.23.53.73:1340/apiuser/v1/finalsurvey";
     fetch(url, requestOptions).then(async (response) => {
       const isJson = response.headers
         .get("content-type")
         ?.includes("application/json");
-      const hasil = isJson && (await response.json());
-
+      const hasil1 = isJson && (await response.json());
+      console.log(hasil1);
       if (!response.ok) {
         // get error message from body or default to response status
         // const error = (data && data.message) || response.status;

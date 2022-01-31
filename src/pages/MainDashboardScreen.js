@@ -662,8 +662,11 @@ const MainDashboardScreen = ({ navigation }) => {
       {/* Currency */}
       <View style={{ flexDirection: "row" }}>
         <View style={{ marginLeft: SIZES.base }}>
-          <Text style={{ ...FONTS.h2 }}>{item.namaprov}</Text>
-          <Text style={{ ...FONTS.h3 }}>Kabupaten: {item.namakab}</Text>
+          <Text style={{ ...FONTS.h2 }}>Kabupaten : {item.namakab}</Text>
+          <Text style={{ ...FONTS.h3 }}>Provinsi : {item.namaprov}</Text>
+
+          {/* <Text style={{ ...FONTS.h2 }}>{item.namaprov}</Text> */}
+          {/* <Text style={{ ...FONTS.h3 }}>Kabupaten: {item.namakab}</Text> */}
           <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>
             Est Luas Tanam : {"\n"} {item.luastanam} Hektar
           </Text>

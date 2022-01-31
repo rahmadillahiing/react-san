@@ -19,7 +19,7 @@ const TabItems = ({ title, active, onPress, onLongPress }) => {
         <AntDesign name="dashboard" size={24} color="black" />
       );
     }
-    if (title === "Survey") {
+    if (title === "Laporan") {
       return active ? (
         <MaterialCommunityIcons
           name="file-find-outline"
@@ -34,7 +34,7 @@ const TabItems = ({ title, active, onPress, onLongPress }) => {
         />
       );
     }
-    if (title === "InputSurvey") {
+    if (title === "Survey") {
       return active ? (
         <FontAwesome name="wpforms" size={24} color="white" />
       ) : (
@@ -48,7 +48,7 @@ const TabItems = ({ title, active, onPress, onLongPress }) => {
         <Feather name="user" size={24} color="black" />
       );
     }
-    if (title === "Final Data") {
+    if (title === "Final Survey") {
       return active ? (
         <Octicons name="checklist" size={24} color="white" />
       ) : (
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   text: (active) => ({
     fontSize: 10,
-    color: active ? colors.text.menuActive : colors.text.menuInactive,
+    color: active ? colors.text.menuActive : colors.text.primary,
     fontWeight: "600",
     marginTop: 4,
   }),
